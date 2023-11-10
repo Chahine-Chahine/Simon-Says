@@ -3,6 +3,9 @@ const buttons = ["green", "red", "yellow" , "blue"];
 const logic_pattern = []
 const user_pattern = []
 
+// set defualt start bolean 
+started = false;
+
 // start at level 0
 let level = 0;
 
@@ -43,4 +46,19 @@ let buttonAnimation = (color_choice) =>{
     setTimeout(()=>{
     $("#" + color_choice).removeClass("pressed");
     },100);
+}
+
+// function for validating the answer
+let answerValidation = (game_level)=>{
+    if (user_pattern.length === logic_pattern.length && user_pattern[game_level] === logic_pattern[game_level]) {
+        setTimeout(() => sequenceCreator(),1000);
+    }else{
+        playSound("wrong")
+        $("body").addClass("game-over");
+        setTimeout(() => $("body").removeClass('game-over'), 300);
+        $("h1").text("Game over, press any key to restart");
+        level = 0;
+        logic_pattern = [];
+        started = false;
+    }
 }
