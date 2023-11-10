@@ -12,6 +12,7 @@ let random_number = Math.floor(Math.random() * 4);
 let random_color = buttons[random_number];
 logic_pattern.push(random_color);
 $("#" + random_color).fadeIn(100).fadeOut(100).fadeIn(100);
+playSound(random_color)
 }
 
 // selecting then storing the user choice 
@@ -19,5 +20,14 @@ $(".btn").click(()=>{
     // select the id attribute of the clicked button
     let user_choice = $(".btn").attr("id");
     user_pattern.push(user_choice);
+    // add sound acc. to user color choice
+    playSound(user_choice);
+
 })
 
+
+// function for sound playing 
+let playSound = (sound) =>{
+    let audio = new Audio("./sounds/" + sound + ".mp3");
+    audio.play();
+}
