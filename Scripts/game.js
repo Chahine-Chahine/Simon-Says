@@ -1,5 +1,5 @@
 // Global variables
-const buttons = ["green", "red", "yellow" , "blue"];
+const button_colors = ["green", "red", "yellow" , "blue"];
 const logic_pattern = []
 const user_pattern = []
 
@@ -13,7 +13,7 @@ let level = 0;
 // Arrow function to generate the game sequence creator
 let  sequenceCreator = ()=>{
 let random_number = Math.floor(Math.random() * 4);
-let random_color = buttons[random_number];
+let random_color = button_colors[random_number];
 logic_pattern.push(random_color);
 $("#" + random_color).fadeIn(100).fadeOut(100).fadeIn(100);
 playSound(random_color)
@@ -30,6 +30,7 @@ $(".btn").click(()=>{
     // add sound acc. to user color choice
     playSound(user_choice);
     buttonAnimation(user_choice);
+    answerValidation(user_pattern.length -1)
 
 })
 
@@ -62,3 +63,17 @@ let answerValidation = (game_level)=>{
         started = false;
     }
 }
+
+
+// function for handling key press
+let handleKeyPress = () => {
+    if(!started){
+        started = true;
+        sequenceCreator();
+    }else if (logic_pattern.length === user_pattern.length){
+        sequenceCreator();
+    }
+}
+
+// target the document to start the game
+$(document).on("keydown", handleKeyPress);
