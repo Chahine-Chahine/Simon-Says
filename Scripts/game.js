@@ -1,7 +1,7 @@
 // Global variables
 const button_colors = ["green", "red", "yellow" , "blue"];
-const logic_pattern = []
-const user_pattern = []
+let logic_pattern = []
+let user_pattern = []
 
 // set defualt start bolean 
 started = false;
@@ -23,11 +23,11 @@ user_pattern = []
 }
 
 // selecting then storing the user choice 
-$(".btn").click(()=>{
+$(".btn").click((event)=>{
     // select the id attribute of the clicked button
-    let user_choice = $(".btn").attr("id");
+    let user_choice = $(event.target).attr("id");
     user_pattern.push(user_choice);
-    // add sound acc. to user color choice
+    // add sound acc. to user color choice  
     playSound(user_choice);
     buttonAnimation(user_choice);
     answerValidation(user_pattern.length -1)
@@ -51,8 +51,10 @@ let buttonAnimation = (color_choice) =>{
 
 // function for validating the answer
 let answerValidation = (game_level)=>{
-    if (user_pattern.length === logic_pattern.length && user_pattern[game_level] === logic_pattern[game_level]) {
+    if (user_pattern[game_level] === logic_pattern[game_level]){
+        if  (user_pattern.length === logic_pattern.length) {
         setTimeout(() => sequenceCreator(),1000);
+    }
     }else{
         playSound("wrong")
         $("body").addClass("game-over");
