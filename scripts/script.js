@@ -57,8 +57,8 @@ let buttonAnimation = (color_choice) =>{
 }
 
 // function for validating the answer
-let answerValidation = (game_level)=>{
-    if (user_pattern[game_level] === logic_pattern[game_level]){
+let answerValidation = (sequence_index)=>{
+    if (user_pattern[sequence_index] === logic_pattern[sequence_index]){
         if  (user_pattern.length === logic_pattern.length) {
         setTimeout(() => sequenceCreator(),1000);
     }
