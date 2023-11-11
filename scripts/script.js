@@ -15,25 +15,32 @@ let  sequenceCreator = ()=>{
 let random_number = Math.floor(Math.random() * 4);
 let random_color = button_colors[random_number];
 logic_pattern.push(random_color);
-$("#" + random_color).fadeIn(100).fadeOut(100).fadeIn(100);
+document.getElementById(random_color).style.opacity = 1;
+setTimeout(() => {
+  document.getElementById(random_color).style.opacity = 0;
+}, 100);
+setTimeout(() => {
+  document.getElementById(random_color).style.opacity = 1;
+}, 200);
 playSound(random_color)
 level++
-$("#level-title").text("level" + " " + level);
+document.getElementById("level-title").textContent = "level" + " " + level;
 user_pattern = []
 }
 
 // selecting then storing the user choice 
-$(".btn").click((event)=>{
+document.querySelectorAll(".btn").forEach(button => {
+    button.addEventListener("click",(event)=>{
     // select the id attribute of the clicked button
-    let user_choice = $(event.target).attr("id");
+    let user_choice = event.target.id;
     user_pattern.push(user_choice);
     // add sound acc. to user color choice  
     playSound(user_choice);
     buttonAnimation(user_choice);
     answerValidation(user_pattern.length -1)
 
-})
-
+});
+});
 
 // function for sound playing 
 let playSound = (sound) =>{
@@ -43,9 +50,9 @@ let playSound = (sound) =>{
 
 // function for button animation
 let buttonAnimation = (color_choice) =>{
-    $("#" + color_choice).addClass("pressed");
+    document.getElementById(color_choice).classList.add("pressed");
     setTimeout(()=>{
-    $("#" + color_choice).removeClass("pressed");
+    document.getElementById(color_choice).classList.remove("pressed");
     },100);
 }
 
@@ -57,9 +64,9 @@ let answerValidation = (game_level)=>{
     }
     }else{
         playSound("wrong")
-        $("body").addClass("game-over");
-        setTimeout(() => $("body").removeClass('game-over'), 300);
-        $("h1").text("Game over, press any key to restart");
+        document.body.classList.add("game-over");
+        setTimeout(() => document.body.classList.remove("game-over"), 300);
+        document.querySelector("h1").textContent = "Game over, press any key to restart";
         level = 0;
         logic_pattern = [];
         started = false;
@@ -78,4 +85,4 @@ let handleKeyPress = () => {
 }
 
 // target the document to start the game
-$(document).on("keydown", handleKeyPress);
+document.addEventListener("keydown", handleKeyPress)
