@@ -4,7 +4,7 @@ let logic_pattern = []
 let user_pattern = []
 
 // set defualt start bolean 
-started = false;
+let started = false;
 
 // start at level 0
 let level = 0;
